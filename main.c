@@ -15,7 +15,10 @@
 #	include "strlcat.c"
 #endif
 
+#include "version.h"
 #include "usage.h"
+#include "procutils.h"		/* mfork() */
+#include "config.h"		/* compiled in defaults */
 
 extern	char	*optarg;
 
@@ -28,11 +31,27 @@ main(int argc, char **argv)
 	char		 c = 0;
 	int		 sfd = -1;
 
+	/* Parse configuration file here */
+
+
+
+	/* Parse command line options */
+
 	while((c = getopt(argc, argv, "")) != -1) {
 		default:
 			usage(EXIT_FAILURE);
 			/* NOTREACHED */
 	}
+
+
+	/* Fork into the background */
+	mfork();
+
+	/* Initialize the SSL library and load error strings */
+	SSL_library_init();
+	SSL_load_error_strigns();
+
+
 
 	return EXIT_SUCCESS;
 }
